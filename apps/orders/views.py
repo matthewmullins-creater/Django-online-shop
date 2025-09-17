@@ -137,10 +137,10 @@ class CheckoutOrderViwe(LoginRequiredMixin, View):
                 customer.save()
                 order.customer = customer
                 order.save()
-                messages.success(request,"سفارش شما با موفقیت ثبت شد","success")
+                messages.success(request,"Your order has been registered successfully","success")
                 return redirect("payments:zarinpal_payment",order_id)
             except ObjectDoesNotExist:
-                messages.error(request,"فاکتوری با این مشخصات پیدا نشد","danger")
+                messages.error(request,"No invoice found with these specifications","danger")
                 return redirect("orders:checkout_order",order_id)
         else:
             return redirect("orders:checkout_order",order_id)
@@ -164,16 +164,16 @@ class ApplayCoupon(View):
                     discount=coupon[0].discount
                     order.discount=discount
                     order.save()
-                    messages.success(request,"اعمال کوپن با موفقیت انجام شد")
+                    messages.success(request,"Coupon applied successfully")
                     return redirect("orders:checkout_order", order_id)
                 else:
                     order.discount=discount
                     order.save()
-                    messages.error(request,"کد کوپن معتبر نیست","danger")
+                    messages.error(request,"Coupon code is not valid","danger")
  
 
             except ObjectDoesNotExist:
-                messages.error(request,"سفارش موجود نیست","danger")
+                messages.error(request,"Order does not exist","danger")
 
         else:
             return redirect("orders:checkout_order", order_id)

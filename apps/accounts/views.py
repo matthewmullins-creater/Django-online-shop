@@ -29,16 +29,16 @@ class RegisterUserView(View):
                 active_code=active_code,
                 password=data['password1']
             )
-            utils.send_SMS(mobile_number=data["mobile_number"],message=f"کد فعال سازی حساب کاربری شما {active_code}")
+            utils.send_SMS(mobile_number=data["mobile_number"],message=f"Your account activation code is {active_code}")
             request.session['user_session']={
                "active_code":str(active_code),
                'mobile_number':data['mobile_number'],
                'remember_password':False
                }
             
-            messages.success(request," اطلاعات شما ثبت شد و کد فعال سازی را وارد کنید","success")
+            messages.success(request,"Your information has been registered, please enter the activation code","success")
             return redirect("accounts:Verify")
-        messages.error(request,"خطا در انجام ثبت نام","error")
+        messages.error(request,"Error in registration","error")
         return render(request, self.template_name, {"form": form})
 #----------------------------------------------------------------------------------------------------------
 class VerifyRegisterCodeView(View):
@@ -64,14 +64,14 @@ class VerifyRegisterCodeView(View):
                     user.is_active=True
                     user.active_code=utils.create_random_code(5)
                     user.save()
-                    messages.success(request,"ثبت نام با موفقیت انحام شد","success")
+                    messages.success(request,"Registration completed successfully","success")
                     return redirect("main:index")
                 else:
                     return redirect("accounts:change_password")
             else:
-                messages.error(request,"کد فعال سازی وارد شده اشتباه میباشد","danger")
+                messages.error(request,"The entered activation code is incorrect","danger")
                 return render(request,self.template_name,{"form":form})
-        messages.error(request,"اظلاعات وارد شده معتبر نمیباشد","danger")
+        messages.error(request,"The entered information is not valid","danger")
         return render(request,self.template_name,{"form":form})
 
 #----------------------------------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ class LoginUserView(View):
                 db_user=CustomUser.objects.get(mobile_number=data['mobile_number'])
 
                 if db_user.is_admin==False:
-                    messages.success(request,"ورود با موفقیت انجام شد",'success')
+                    messages.success(request,"Login successful",'success')
                     login(request,user)
                     next_url=request.GET.get('next')
                     if next_url is not None:
@@ -105,13 +105,13 @@ class LoginUserView(View):
                     else:
                         return redirect("main:index")
                 else:
-                    messages.error(request,"کاربر ادمین نمیتواند از اینجا وارد شود",'warning')
+                    messages.error(request,"Admin user cannot login from here",'warning')
                     return render(request,self.template_name,{'form':form})
             else:
-                messages.error(request,"اطلاعات کاربری وارد شده نادرست است","danger")
+                messages.error(request,"The entered user information is incorrect","danger")
                 return render(request,self.template_name,{'form':form})
         else:
-            messages.error(request,"اطلاعات وارد شده نامعتبر است","danger")
+            messages.error(request,"The entered information is invalid","danger")
             return render(request,self.template_name,{'form':form})
 
 
@@ -169,15 +169,15 @@ class ChangePasswordView(View):
             user_session=request.session['user_session']
             user=CustomUser.objects.get(mobile_number=user_session['mobile_number'])
             if user.password == data['password1']:
-                messages.error(request,"رمز عبور جدید نمیتواند با رمز عبور فعلی یکسان باشد","danger")
+                messages.error(request,"New password cannot be the same as current password","danger")
                 return render(request,self.tempalte_name,{"form":form})
             user.set_password(data['password1'])
             user.active_code=utils.create_random_code(5)
             user.save()
-            messages.success(request,"رمز عبور با موفقیت تغییر یافت","success")
+            messages.success(request,"Password changed successfully","success")
             return redirect("accounts:Login")
         else:
-            messages.error(request,"اطلاعات وارد شده معتبر نمیباشد","danger")
+            messages.error(request,"The entered information is not valid","danger")
             return render(request,self.tempalte_name,{"form":form})
 
 #----------------------------------------------------------------------------------------------------------
@@ -198,13 +198,13 @@ class RemeberPasswordView(View):
                 user=CustomUser.objects.get(mobile_number=data['mobile_number'])
                 user.active_code=active_code
                 user.save()
-                utils.send_SMS(mobile_number=data["mobile_number"],message=f"کد تایید شماره موبایل شما{active_code}")
+                utils.send_SMS(mobile_number=data["mobile_number"],message=f"Your mobile number confirmation code is {active_code}")
                 request.session['user_session']={
                     'active_code':str(active_code),
                     'mobile_number':data['mobile_number'],
                     'remember_password':True
                 }
-                messages.success(request,"جهت تغییر رمز عبور کد فعال سازی را وارد کنید","success")
+                messages.success(request,"To change password, please enter the activation code","success")
                 return redirect("accounts:Verify")
             except:
                 messages.error(request,"کاربری با این شماره موبایل وجود ندارد","danger")

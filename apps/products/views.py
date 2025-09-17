@@ -10,7 +10,7 @@ def get_root_group():
     return  PoductGroup.objects.filter(Q(is_active=True) & Q(group_parent=None))
 #-------------------------------------------------------------------------------------------------------------
 
-# ارزان ترین محصولاات
+# Cheapest products
 def get_cheapest_products(request,*args, **kwargs):
     products = Product.objects.filter(is_active=True).order_by('price')[:8]
     products_groups =get_root_group()
@@ -21,7 +21,7 @@ def get_cheapest_products(request,*args, **kwargs):
     return render(request,"product_app/partials/cheapest_products.html",context=context) 
 #-------------------------------------------------------------------------------------------------------------
 
-# جدید ترین محصولات
+# Latest products
 def get_last_products(request,*args, **kwargs):
     products = Product.objects.filter(is_active=True).order_by('-published_date')[:8]
     products_groups = get_root_group()
@@ -40,7 +40,7 @@ def get_popular_product_groups(request,*args, **kwargs):
     return render(request,"product_app/partials/popular_product_group.html",context=context)
 #-------------------------------------------------------------------------------------------------------------
 
-# جزییات محصول
+# Product details
 class ProductDetailView(View):
     def get(self,request,slug):
         product=get_object_or_404(Product,slug=slug)
@@ -48,7 +48,7 @@ class ProductDetailView(View):
             return render(request,"product_app/product_detail.html",{"product":product})
 #-------------------------------------------------------------------------------------------------------------
 
-# محصولات مرتبط
+# Related products
 def get_related_products(request,*args, **kwargs):
     current_product=get_object_or_404(Product,slug=kwargs['slug'])
     related_product=[]
@@ -58,21 +58,21 @@ def get_related_products(request,*args, **kwargs):
         )
     return render(request,"product_app/partials/related_products.html",{"related_product":related_product})
 #-------------------------------------------------------------------------------------------------------------
-# لیست کلیه گروه های محصولات
+# List of all product groups
 class ProductGroupsView(View):
     def get(self,request):
         product_groups=PoductGroup.objects.filter(Q(is_active=True)).annotate(count=Count('products_of_group')).order_by('-count')
         return render(request,"product_app/partials/product_groups.html",{"product_groups":product_groups})
     
 #-------------------------------------------------------------------------------------------------------------
-# لیست گروه محصولات برای فیلتر
+# List of product groups for filter
 def get_product_groups(request):
     product_groups = PoductGroup.objects.annotate(count=Count('products_of_group')).filter(Q(is_active=True) & ~Q(count=0)).order_by('-count')
     return render(request,"product_app/partials/product_groups.html",{"product_groups":product_groups})
 
 
 #-------------------------------------------------------------------------------------------------------------
-# لیست برند ها برای فیلتر
+# List of brands for filter
 def get_brands(request,*args, **kwargs):
     product_group = get_object_or_404(PoductGroup,slug=kwargs['slug'])
     brand_list_id=product_group.products_of_group.filter(is_active=True).values('brand_id')
@@ -80,7 +80,7 @@ def get_brands(request,*args, **kwargs):
     return render(request,'product_app/partials/brands.html',{'brands':brands})
 #-------------------------------------------------------------------------------------------------------------
 
-# tow dropdown in adminpanel
+# two dropdown in adminpanel
 def filter_value_for_feature(request):
     if request.method == "GET":
         feature_id = request.GET.get('feature_id')
@@ -99,7 +99,7 @@ def get_features_for_filtre(request,*args, **kwargs):
     return render(request,'product_app/partials/features_filter.html',{'feature_dict':features_dict})
     
 #-------------------------------------------------------------------------------------------------------------
-# لیست محصولات هر گروه محصولات
+# List of products for each product group
 
 class ProductsByGroupView(View):
     def get(self,request,*args, **kwargs):
@@ -110,7 +110,7 @@ class ProductsByGroupView(View):
 
         products = Product.objects.filter(Q(product_group=current_group_detection) & Q(is_active=True))
         
-        res_aggre = products.aggregate(min=Min('price'),max=Max('price')) # خروجی اگرگیت یک دیکشنریه
+        res_aggre = products.aggregate(min=Min('price'),max=Max('price')) # aggregate output is a dictionary
         # price filter
         filters =ProductFilter(request.GET,queryset=products)
         products = filters.qs
@@ -151,11 +151,11 @@ class ProductsByGroupView(View):
         show_count_product.append(i)
 
 
-        # همیشه مقدار انتخاب‌شده را در لیست نگه می‌داریم
+        # Always keep the selected value in the list
         if product_per_page not in show_count_product:
             show_count_product.append(product_per_page)
 
-        # مرتب‌سازی لیست تا مقدار انتخاب‌شده در جای درست قرار بگیرد
+        # Sort the list so that the selected value is in the right place
         show_count_product.sort()
 
 
@@ -177,7 +177,7 @@ class ProductsByGroupView(View):
        
     
 # ___________________________________________________________________________________________________________________________________
-# صفجه ی اصلی مقایسه : نمایش کالا های اضافه شده به لیست مقایسه
+# Main comparison page: Display products added to comparison list
 
 class ShowCompareListView(View):
     def get(self, request, *args, **kwargs):
@@ -188,14 +188,14 @@ class ShowCompareListView(View):
         return render(request,'product_app/compare_list.html',context)
 
 # -----------------------------------------------
-# نمایش جدول کالاهای لیست مقایسه
+# Display comparison list products table
 
 from .compare import CompareProduct
 
 def compare_table(request):
     compareList = CompareProduct(request)
     
-    # فقط ایدی کالا بدرد نمیخوره و چون به نام و همه اطلاعات کالا نیاز دارم کالا ها رو بدست اوردم
+    # Only product ID is not enough and since I need the name and all product information, I got the products
     products = []
     for productId in compareList.compare_product:
         product = Product.objects.get(id=productId)
@@ -215,11 +215,11 @@ def compare_table(request):
     return render(request,'product_app/partials/compare_table.html',context)
 
 # -----------------------------------------------
-# محاسبه ی کالا های موجود در لیست مقایسه
-# مورد | توضیح
-# HttpResponse() | پاسخ خام و ساده به کلاینت می‌ده
-# محتواش | می‌تونه متن، عدد، HTML، JSON (اگه با JsonResponse باشه) و... باشه
-# توی این مثال | فقط تعداد کالاهای داخل لیست مقایسه رو برمی‌گردونه (مثلاً 3)
+# Calculate products in comparison list
+# Case | Description
+# HttpResponse() | Gives raw and simple response to client
+# Its content | Can be text, number, HTML, JSON (if with JsonResponse) and...
+# In this example | Only returns the number of products in the comparison list (e.g. 3)
 
 from django.http import HttpResponse
 
