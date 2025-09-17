@@ -32,11 +32,11 @@ class Slider(models.Model):
     def image_slide(self):
         return mark_safe(f'<img src="/media/{self.image_name}" style="width:80px; height:80px"/>')
     
-    image_slide.short_description = "تصویر اسلاید"
+    image_slide.short_description = "Slide Image"
     
     
-    # میخوام لینک اسلایدر از توی پنل ادمین هم قابل کلیک کردن باشه
+    # I want the slider link to be clickable from the admin panel as well
     def link(self):
         return mark_safe(f'<a href="{self.slider_link} target="_blank">link</a>')
     
-    link.short_description = 'پیوندها'
+    link.short_description = 'Links'
