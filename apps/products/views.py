@@ -228,18 +228,18 @@ def status_of_compare_list(request):
     return HttpResponse(compareList.count)
 
 # -----------------------------------------------
-# اضافه کردن کالا به لیست مقایسه
+# Add product to comparison list
 
 def add_to_compare_list(request):
     productId = request.GET.get("productId")
     # productGroupId = request.GET.get("productGroupId")
     compareList = CompareProduct(request)
     compareList.add_to_compare_product(productId)
-    return HttpResponse('کالا به لیست مقایسه اضافه شد')
+    return HttpResponse('Product added to comparison list')
 
 
 # -----------------------------------------------
-# حذف کردن کالا از لیست مقایسه
+# Remove product from comparison list
 
 def delete_from_compare_list(request):
     productId = request.GET.get("productId")

@@ -1,15 +1,15 @@
 from django import forms
 from .models import Order,PaymentType
 
-# Chice_PaymentType=((1,"پرداخت از طریق درگاه بانکی"),(2,"پرداخت در محل"))
+# Chice_PaymentType=((1,"Payment through banking gateway"),(2,"Payment on delivery"))
 class OrderForm(forms.Form):
     name = forms.CharField(
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'نام'
+            'placeholder': 'Name'
         }),
         error_messages={
-            'required': 'این فیلد نمیتواند خالی باشد'
+            'required': 'This field cannot be empty'
         },
 
         
@@ -18,10 +18,10 @@ class OrderForm(forms.Form):
     family = forms.CharField(
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'نام خانوادگی'
+            'placeholder': 'Family Name'
         }),
         error_messages={
-            'required': 'این فیلد نمیتواند خالی باشد'
+            'required': 'This field cannot be empty'
         },
 
     )
@@ -29,7 +29,7 @@ class OrderForm(forms.Form):
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
-            'placeholder': 'ایمیل'
+            'placeholder': 'Email'
         }),
         required=False
     )
@@ -37,7 +37,7 @@ class OrderForm(forms.Form):
     phone_number = forms.CharField(
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'شماره تلفن'
+            'placeholder': 'Phone Number'
         }),
         required=False
     )
@@ -45,19 +45,19 @@ class OrderForm(forms.Form):
     address = forms.CharField(
         widget=forms.Textarea(attrs={
             'class': 'form-control',
-            'placeholder': 'آدرس',
+            'placeholder': 'Address',
             "rows": "2",
 
         }),
         error_messages={
-            'required': 'این فیلد نمیتواند خالی باشد'
+            'required': 'This field cannot be empty'
         }
     )
     
     description = forms.CharField(
         widget=forms.Textarea(attrs={
             'class': 'form-control',
-            'placeholder': 'توضیحات',
+            'placeholder': 'Description',
             "rows": "4"
         }),
         required=False

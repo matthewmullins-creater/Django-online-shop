@@ -7,7 +7,7 @@ from utils import FileUpload
 class CustomUserManager(BaseUserManager):
     def create_user(self,mobile_number,email="",name="",family="",active_code=None,gender=None,password=None):
         if not mobile_number:
-            raise ValueError("شماره موبایل باید وارد شود")
+            raise ValueError("Mobile number must be entered")
         
         user=self.model(
             mobile_number=mobile_number,
@@ -38,11 +38,11 @@ class CustomUserManager(BaseUserManager):
 #___________________________________________________________________________________
 
 class CustomUser(AbstractBaseUser,PermissionsMixin):
-    mobile_number=models.CharField(max_length=11,unique=True,verbose_name="شماره موبایل")
+    mobile_number=models.CharField(max_length=11,unique=True,verbose_name="Mobile Number")
     email=models.EmailField(max_length=200,blank=True)
     name=models.CharField(max_length=50,blank=True)
     family=models.CharField(max_length=50,blank=True)
-    GENDER_CHOICES=(('True','مرد'),("False","زن"),)
+    GENDER_CHOICES=(('True','Male'),("False","Female"),)
     gender=models.CharField(max_length=50,blank=True,choices=GENDER_CHOICES,default='True',null=True)
     register_date=models.DateField(default=timezone.now)
     is_active=models.BooleanField(default=False)
@@ -64,16 +64,16 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
 #___________________________________________________________________________________
 
 class Customer(models.Model):
-    user=models.OneToOneField(CustomUser,on_delete=models.CASCADE,verbose_name="کاربر")
-    phone=models.CharField(max_length=15,blank=True,null=True,verbose_name="شماره تماس")
-    address=models.TextField(blank=True,null=True,verbose_name="آدرس")
+    user=models.OneToOneField(CustomUser,on_delete=models.CASCADE,verbose_name="User")
+    phone=models.CharField(max_length=15,blank=True,null=True,verbose_name="Phone Number")
+    address=models.TextField(blank=True,null=True,verbose_name="Address")
     FileUpload("images","brand")
-    image=models.ImageField(upload_to=FileUpload.upload_to,blank=True,null=True,verbose_name="عکس")
+    image=models.ImageField(upload_to=FileUpload.upload_to,blank=True,null=True,verbose_name="Image")
     
     def __str__(self):
         return f"{self.user}"
     
     class Meta:
-        verbose_name="کاربر"
-        verbose_name_plural="کاربران"
+        verbose_name="User"
+        verbose_name_plural="Users"
 
