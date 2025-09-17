@@ -1,7 +1,7 @@
 {% extends "main_template.html" %}
 {% load render_partial %}
 
-{% block title %}فروشگاه درسمن{% endblock title %}
+{% block title %}Darsman Shop{% endblock title %}
 
 {% block content %}
 <div class="site__body">
@@ -10,9 +10,9 @@
             <div class="page-header__breadcrumb">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{% url 'main:index' %}">خانه</a>/</li>
-                        <li class="breadcrumb-item"><a href="{% url "products:product_groups" %}">محصولات</a>/</li>
-                        <li class="active" aria-current="page">محصول</li>
+                        <li class="breadcrumb-item"><a href="{% url 'main:index' %}">Home</a>/</li>
+                        <li class="breadcrumb-item"><a href="{% url "products:product_groups" %}">Products</a>/</li>
+                        <li class="active" aria-current="page">Product</li>
                     </ol>
                 </nav>
             </div>

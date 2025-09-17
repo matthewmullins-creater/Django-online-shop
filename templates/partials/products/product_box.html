@@ -16,7 +16,7 @@
                 <div class="product-card__actions">
                     
                          {% if product.get_number_in_warehouse <= 0 %}
-                            <span style="color:red;">اتمام موجودی</span>
+                            <span style="color:red;">Out of Stock</span>
                         {% else %}
                             {% if product.price > product.get_price_by_discount %}
                                 <div class="product-card__prices"><del>{{ product.price|floatformat:0|intcomma }} تومان </del></div>
@@ -29,7 +29,7 @@
                         <div class="product-card__buttons">
                         {% if product.get_number_in_warehouse > 0 %}
                             <button class="btn btn-primary product-card__addtocart" type="button" onclick="add_to_shop_cart({{product.id}},1)">
-                            افزودن به سبد</button>
+                            Add to Cart</button>
                         {% endif %}
                         {% if user.is_authenticated %}
                             <button 
@@ -63,7 +63,7 @@
                 
                 <div class="product-card__actions">
                         {% if product.get_number_in_warehouse <= 0 %}
-                            <span style="color:red;">اتمام موجودی</span>
+                            <span style="color:red;">Out of Stock</span>
                         {% else %}
                             {% if product.price > product.get_price_by_discount %}
                                 <div class="product-card__prices"><del>{{ product.price|floatformat:0|intcomma }} تومان </del></div>
@@ -76,7 +76,7 @@
                         <div class="product-card__buttons">
                             {% if product.get_number_in_warehouse > 0 %}
                                 <button class="btn btn-primary product-card__addtocart" type="button" onclick="add_to_shop_cart({{product.id}},1)">
-                                افزودن به سبد</button>
+                                Add to Cart</button>
                             {% endif %}
                             {% if user.is_authenticated %}
                                 <button 
@@ -115,7 +115,7 @@
                                                         <div class="product-card__availability">
                                                             
                                                             {% if product.get_number_in_warehouse <= 0 %}
-                                                                <span style="color:red;">اتمام موجودی</span>
+                                                                <span style="color:red;">Out of Stock</span>
                                                             {% else %}
                                                                 {% if product.price > product.get_price_by_discount %}
                                                                     <div class="product-card__prices"><del>{{ product.price|floatformat:0|intcomma }} تومان </del></div>
@@ -128,9 +128,9 @@
                                                         <div class="product-card__buttons">
                                                             {% if product.get_number_in_warehouse > 0 %}
                                                                 <button class="btn btn-primary product-card__addtocart" type="button" onclick="add_to_shop_cart({{product.id}},1)">
-                                                                    افزودن به سبد</button>
+                                                                    Add to Cart</button>
                                                             {% else %}
-                                                            <span style="color:red;">اتمام موجودی</span>
+                                                            <span style="color:red;">Out of Stock</span>
                                                             {% endif %}
 
                                                             {% if user.is_authenticated %}

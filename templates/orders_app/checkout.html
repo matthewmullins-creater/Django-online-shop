@@ -1,6 +1,6 @@
 {% extends "main_template.html" %}
 {% load render_partial %} 
-{% block title %}فاکتور سفارش{% endblock title %} 
+{% block title %}Order Invoice{% endblock title %} 
 {% load humanize %}
 {% block content %} 
 
@@ -11,16 +11,16 @@
 					<div class="page-header__breadcrumb">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="{% url 'main:index' %}">خانه</a>
+										<li class="breadcrumb-item"><a href="{% url 'main:index' %}">Home</a>
 									/
 								</li>
 								
-								<li class="breadcrumb-item active" aria-current="page">پرداخت</li>
+										<li class="breadcrumb-item active" aria-current="page">Payment</li>
 							</ol>
 						</nav>
 					</div>
 					<div class="page-header__title">
-						<h1>پرداخت</h1></div>
+									<h1>Payment</h1></div>
 				</div>
 			</div>
 			<div class="checkout block">
@@ -31,29 +31,29 @@
 								<div class="card-body">
 									<form action="{% url "orders:checkout_order" order_id=order.id %}" method="post">
 										{% csrf_token %}
-										<h3 class="card-title">جزئیات پرداخت</h3>
+											<h3 class="card-title">Payment Details</h3>
 										<div class="form-row">
 											<div class="form-group col-md-6">
-												<label for="checkout-first-name">نام</label>
+													<label for="checkout-first-name">Name</label>
 												{{form_order.name}}
 											</div>
 											<div class="form-group col-md-6">
-												<label for="checkout-last-name">نام خانوادگی</label>
+													<label for="checkout-last-name">Family Name</label>
 												{{form_order.family}}
 											</div>
 											<div class="form-row">
 												<div class="form-group col-md-6">
-													<label for="checkout-email">آدرس ایمیل</label>
+														<label for="checkout-email">Email Address</label>
 													{{form_order.email}}
 												</div>
 												<div class="form-group col-md-6">
-													<label for="checkout-phone">تلفن</label>
+														<label for="checkout-phone">Phone</label>
 													{{form_order.phone_number}}
 												</div>
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="checkout-street-address">آدرس </label>
+														<label for="checkout-street-address">Address </label>
 												{{form_order.address}}
 										</div>
 										
@@ -62,7 +62,7 @@
 									<div class="card-body">
 
 										<div class="form-group">
-											<label for="checkout-comment">توضیحات سفارش <span class="text-muted">(اختیاری)</span></label>
+														<label for="checkout-comment">Order Description <span class="text-muted">(Optional)</span></label>
 											{{form_order.description}}
 										</div>
 									</div>
@@ -72,13 +72,13 @@
 							<div class="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0">
 								<div class="card mb-0">
 									<div class="card-body">
-										<h3 class="card-title">سفارش شما</h3>
+													<h3 class="card-title">Your Order</h3>
 										<table class="checkout__totals">
 											<thead class="checkout__totals-header">
 												<tr>
-													<th>نام محصول</th>
-													<th>تعداد</th>
-													<th>جمع کل</th>
+																<th>Product Name</th>
+																<th>Quantity</th>
+													<th>Total</th>
 												</tr>
 											</thead>
 											<tbody class="checkout__totals-products">
@@ -117,7 +117,7 @@
 											</tbody>
 											<tfoot class="checkout__totals-footer">
 												<tr style="color:green; font-weight: bold;">
-													<th colspan="2">جمع کل</th>
+													<th colspan="2">Total</th>
 													<td>{{order_final_price|intcomma}} تومان</td>
 
 												</tr>

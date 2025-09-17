@@ -1,11 +1,11 @@
 {% if products %}
     <div class="container">
-        <h2 style="text-align: center; color: green;">کالا های انتخابی برای مقایسه</h2>
+        <h2 style="text-align: center; color: green;">Selected Products for Comparison</h2>
         <table class="table table-bordered">
 
 
             <tr style="background: #f1f1f1; text-align: center;">
-                <th>ویژگی کالا / ویژگی</th>
+                <th>Product Feature / Feature</th>
                 {% for product in products %}
                     <th>
                         <i class="fa fa-times product-remove" onclick="deleteFromCompareList({{product.id}})"></i>
@@ -42,8 +42,8 @@
                   d="M4 6h16M4 10h16M4 14h16M4 18h16" />
               </svg> {% endcomment %}
             </div>
-            <h2 class="compare-empty__title">جدول مقایسه خالی است!</h2>
-            <p class="compare-empty__desc">محصولات دلخواه خود را برای مقایسه انتخاب کنید.</p>
+            <h2 class="compare-empty__title">Compare table is empty!</h2>
+            <p class="compare-empty__desc">Select your desired products for comparison.</p>
 
             <div class="compare-empty__icon swing-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 640 512" fill="currentColor">

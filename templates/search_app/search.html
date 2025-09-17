@@ -1,15 +1,15 @@
 {% extends "main_template.html" %}
 {% load render_partial %}
-{% block title %}نتیجه جست و جوی شما{% endblock title %}
+{% block title %}Your Search Results{% endblock title %}
 
 {% block content %}
 
-{% comment %} اگه کالایی پیدا کرد نشون میده اگه نه میگه نه {% endcomment %}
+{% comment %} if a product is found it shows it, if not it says no {% endcomment %}
 
 {% if products %}
     <div class="">
         <div class="container">
-            <h2 style="text-align: center;">نتیجه جست و جوی شما</h2>
+            <h2 style="text-align: center;">Your Search Results</h2>
             <div class="product-flexbox">
                 {% for product in products %}
                     {% include "partials/products/product_box.html" with type=1 %}
@@ -19,7 +19,7 @@
     </div>
 {% else %}
     <div class="container" style="padding: 100px;">
-        <h3 style="text-align: center; color:red;">کالایی با این مشخصات یافت نشد</h3>
+        <h3 style="text-align: center; color:red;">No product found with these specifications</h3>
     </div>
 {% endif %}
 

@@ -1,12 +1,12 @@
 {% load render_partial %} 
 <div class="reviews-view">
     <div class="reviews-view__list">
-        <h3 class="reviews-view__header">دیدگاه های مشتریان</h3>
+        <h3 class="reviews-view__header">Customer Reviews</h3>
         <div class="reviews-list">
             <ol class="reviews-list__content">
                 {% for comment in product.comments_product.all %}
                     {% if comment.is_active and comment.comment_parent == None %}
-                        <!-- کامنت والد -->
+                        <!-- parent comment -->
                         <li class="reviews-list__item">
                             <div class="review">
                                 <div class="review__avatar">
@@ -21,12 +21,12 @@
                             
                             {% if user.is_authenticated %}
                                 <div>
-                                    <a class="btn btn-info" id="btn_{{ comment.id }}" onclick="showCreateCommentForm({{ product.id }}, {{ comment.id }}, '{{ product.slug }}');">پاسخ</a>
+                                    <a class="btn btn-info" id="btn_{{ comment.id }}" onclick="showCreateCommentForm({{ product.id }}, {{ comment.id }}, '{{ product.slug }}');">Reply</a>
                                 </div>
                                 <div id="comment_form_{{ comment.id }}"></div>
                             {% endif %}
 
-                            <!-- پاسخ‌ها -->
+                            <!-- replies -->
                             {% for reply in comment.comment_child.all %}
                                 {% if reply.is_active %}
                                     <ul class="reviews-list__content" style="list-style: none;">

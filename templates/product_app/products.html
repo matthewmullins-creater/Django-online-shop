@@ -1,7 +1,7 @@
 {% extends "main_template.html" %}
 {% load render_partial %}
 {% load humanize %}
-{% block title %}فروشگاه مسعود{% endblock title %}
+{% block title %}Masoud Shop{% endblock title %}
 {% block content %}
         
         <!-- site__body -->
@@ -12,7 +12,7 @@
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item">
-									<a href="{% url 'main:index' %}">خانه</a>
+													<a href="{% url 'main:index' %}">Home</a>
 									/مرتب‌سازی 
 								</li>
 								<li class="breadcrumb-item">
@@ -22,7 +22,7 @@
 						</nav>
 					</div>
 					<div class="page-header__title">
-						<h1 class= "product-group-title">محصولات گروه {{ current_group.group_title }}</h1></div>
+													<h1 class= "product-group-title">Products of {{ current_group.group_title }} Group</h1></div>
 				</div>
 			</div>
 			<div class="container">
@@ -32,15 +32,15 @@
 							<form action="">
 							<div class="block-sidebar__item">
 								<div class="widget-filters widget" data-collapse data-collapse-opened-class="filter--opened">
-									<h4 class="widget__title">فیلترها</h4>
+													<h4 class="widget__title">Filters</h4>
 									<a id="filter_state" class="btn-filter-state" href="{% url "products:product_of_group" slug=group_slug %}">
 										<i class="fa fa-times"></i>
-										دارای فیلتر
+														Has Filter
 									</a>
 									<div class="widget-filters__list">
 										<div class="widget-filters__item">
 											<div class="filter filter--opened" data-collapse-item>
-												<button type="button" class="filter__title" data-collapse-trigger>دسته ها
+												<button type="button" class="filter__title" data-collapse-trigger>Categories
 													<svg class="filter__arrow" width="12px" height="7px">
 														<use xlink:href="images/sprite.svg#arrow-rounded-down-12x7"></use>
 													</svg>

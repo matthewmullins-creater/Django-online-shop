@@ -7,11 +7,11 @@
         {% endif %}
             <div class="profile-card__name">{{user_info.name}} {{user_info.family}}</div>
             <div class="profile-card__email">{{user_info.email}}</div>
-            <div class="profile-card__edit"><a href="{% url "accounts:update_profile" %}" class="btn btn-secondary btn-sm">ویرایش پروفایل</a></div>
+            <div class="profile-card__edit"><a href="{% url "accounts:update_profile" %}" class="btn btn-secondary btn-sm">Edit Profile</a></div>
     </div>
 </div>
 <div class="dashboard__address card address-card address-card--featured">
-    <div class="address-card__badge">آدرس</div>
+    <div class="address-card__badge">Address</div>
     <div class="address-card__body">
         <div class="address-card__name">{{user_info.name}} {{user_info.family}}</div>
         <div class="address-card__row">
@@ -19,12 +19,12 @@
         </div>
 
         <div class="address-card__row">
-            <div class="address-card__row-title">شماره تلفن</div>
+            <div class="address-card__row-title">Phone Number</div>
             <div class="address-card__row-content"><span class="ltr_text">{{user_info.phone_number}}</span></div>
         </div>
 
         <div class="address-card__row">
-            <div class="address-card__row-title">آدرس ایمیل</div>
+            <div class="address-card__row-title">Email Address</div>
             <div class="address-card__row-content"><span class="ltr_text">{{user_info.email}}</span></div>
         </div>
 
