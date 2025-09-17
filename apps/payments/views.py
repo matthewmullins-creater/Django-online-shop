@@ -24,15 +24,15 @@ ZP_API_REQUEST = f"https://{sandbox}.zarinpal.com/pg/rest/WebGate/PaymentRequest
 ZP_API_VERIFY = f"https://{sandbox}.zarinpal.com/pg/rest/WebGate/PaymentVerification.json"
 ZP_API_STARTPAY = f"https://{sandbox}.zarinpal.com/pg/StartPay/"
 
-# ادرسی که به زرینپال میگه کار مشتری که تمام شد برگرده به صفحه ی من
+# Address that tells Zarinpal to return to my page when customer work is done
 CallbackURL = 'http://127.0.0.1:8080/payments/verify/'
 
 
 # Create your views here.
-# زرینپال رو مینویسیم چون ممکنه بعد ها از درگاه های دیگه هم استفاده کنیم
-# قبل رفتن به درگاه باید اطمینان کنیم که کاربر لاگینه
+# We write Zarinpal because we might use other gateways later
+# Before going to the gateway, we must make sure the user is logged in
 
-# بعد از زدن دکمه ی ثبت سفارش در اپ اردر باید بیایم اینجا پس براش یو ار ال مینویسم
+# After clicking the order registration button in the order app, I should come here, so I write a URL for it
 
 
 
@@ -40,7 +40,7 @@ class ZarinpalPaymentView(LoginRequiredMixin,View):
     def get(self,request,order_id):
         
         try:
-            description = 'پرداخت از طریق درگاه زرین پال انجام شد'
+            description = 'Payment was made through Zarinpal gateway'
             order = Order.objects.get(id=order_id)
             payment = Payment.objects.create(
                 order=order,

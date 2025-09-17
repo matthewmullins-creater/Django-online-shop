@@ -27,7 +27,7 @@ def contactus(request):
 
 class SliderView(View):
     def get(self,request):
-        # اسلایدر های فعال رو برام از دیتابیس بیار
+        # Get active sliders from database for me
         sliders = Slider.objects.filter(Q(is_active=True))
         return render(request,'main_app/sliders.html',{'sliders':sliders})
     

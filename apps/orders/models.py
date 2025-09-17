@@ -41,10 +41,10 @@ class Order(models.Model):
 class OrderDetails(models.Model):
     Order=models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_details1', verbose_name='Order')
     product=models.ForeignKey(Product, on_delete=models.CASCADE, related_name='order_details2', verbose_name='Product')
-    quantity=models.PositiveIntegerField(default=1,verbose_name='تعداد محصول')
-    price=models.IntegerField(verbose_name='قیمت محصول')
+    quantity=models.PositiveIntegerField(default=1,verbose_name='Product Quantity')
+    price=models.IntegerField(verbose_name='Product Price')
     def __str__(self):
         return f'{self.Product}\t{self.price}\t{self.quantity}'
     class Meta:
-        verbose_name='جزییات سفارش'
-        verbose_name_plural='جزییات سفارشات'
+        verbose_name='Order Details'
+        verbose_name_plural='Order Details'

@@ -9,70 +9,70 @@ from django.db.models import Sum,Avg
 #_______________________________________________________________
 
 class Brand(models.Model):
-    brand_title = models.CharField(max_length=100,verbose_name="نام برند")
+    brand_title = models.CharField(max_length=100,verbose_name="Brand Name")
     file_upload = FileUpload('images','brand')
-    image_name = models.ImageField(upload_to=file_upload.upload_to,verbose_name="تصویر برند کالا")
+    image_name = models.ImageField(upload_to=file_upload.upload_to,verbose_name="Product Brand Image")
     slug=models.SlugField(max_length=200,null=True)
 
     def __str__(self):
         return self.brand_title
     
     class Meta:
-        verbose_name="برند"
-        verbose_name_plural="برندها"
+        verbose_name="Brand"
+        verbose_name_plural="Brands"
 
 #_______________________________________________________________
 
 class PoductGroup(models.Model):
-    group_title = models.CharField(max_length=100,verbose_name=" عنوان گروه کالا")
+    group_title = models.CharField(max_length=100,verbose_name="Product Group Title")
     file_upload = FileUpload(dir='images',prefix='product_group')
     image_name = models.ImageField(upload_to=file_upload.upload_to,verbose_name="عکس گروه کالا")
     description = models.TextField(verbose_name="توضیحات گروه کالا",blank=True,null=True)
-    is_active = models.BooleanField(default=True,blank=True,verbose_name="وضعیت فعال / غیرفعال")
+    is_active = models.BooleanField(default=True,blank=True,verbose_name="Active / Inactive Status")
     group_parent = models.ForeignKey('PoductGroup',on_delete=models.CASCADE,blank=True,null=True,verbose_name="والدگروه کالا",related_name="groups")
     slug=models.SlugField(max_length=200,null=True)
-    register_data=models.DateTimeField(auto_now=True,verbose_name="تاریخ درج")
-    published_date=models.DateTimeField(default=timezone.now,verbose_name="تاریخ انتشار")
-    update_date=models.DateTimeField(auto_now=True,verbose_name="تاریخ اخرین بروزرسانی")
+    register_data=models.DateTimeField(auto_now=True,verbose_name="Registration Date")
+    published_date=models.DateTimeField(default=timezone.now,verbose_name="Publication Date")
+    update_date=models.DateTimeField(auto_now=True,verbose_name="Last Update Date")
     
     def __str__(self):
         return self.group_title
     
     class Meta:
-        verbose_name="گروه کالا"
-        verbose_name_plural="گروه های کالا"
+        verbose_name="Product Group"
+        verbose_name_plural="Product Groups"
 
 #_______________________________________________________________
 
 class Feature(models.Model):
-    feature_name = models.CharField(max_length=100,verbose_name="نام ویژگی")
-    product_group = models.ManyToManyField(PoductGroup,verbose_name="گروه کالا",related_name="features_of_group")
+    feature_name = models.CharField(max_length=100,verbose_name="Feature Name")
+    product_group = models.ManyToManyField(PoductGroup,verbose_name="Product Group",related_name="features_of_group")
     
     def __str__(self):
         return self.feature_name
     
     class Meta:
-        verbose_name = "ویژگی"
-        verbose_name_plural = "ویژگی ها"
+        verbose_name = "Feature"
+        verbose_name_plural = "Features"
 
 
 #_______________________________________________________________
 
 class Product(models.Model):
-    produce_name = models.CharField(max_length=500,verbose_name="نام کالا")
+    produce_name = models.CharField(max_length=500,verbose_name="Product Name")
     summery_description = models.TextField(default="",null=True,blank=True)
     description = RichTextUploadingField(default="",config_name='special',blank=True)
     file_upload = FileUpload('images','product')
-    image_name = models.ImageField(upload_to=file_upload.upload_to,verbose_name="تصویر کالا")
-    price=models.PositiveIntegerField(default=0,verbose_name="قیمت کالا")
-    product_group = models.ManyToManyField(PoductGroup,verbose_name="گروه کالا",related_name="products_of_group")
+    image_name = models.ImageField(upload_to=file_upload.upload_to,verbose_name="Product Image")
+    price=models.PositiveIntegerField(default=0,verbose_name="Product Price")
+    product_group = models.ManyToManyField(PoductGroup,verbose_name="Product Group",related_name="products_of_group")
     features=models.ManyToManyField(Feature,through="ProductFeature")
-    brand = models.ForeignKey(Brand,verbose_name="برند کالا",on_delete=models.CASCADE,null=True,related_name="product_of_brands")
-    is_active = models.BooleanField(default=True,blank=True,verbose_name="وضعیت فعال / غیرفعال")
+    brand = models.ForeignKey(Brand,verbose_name="Product Brand",on_delete=models.CASCADE,null=True,related_name="product_of_brands")
+    is_active = models.BooleanField(default=True,blank=True,verbose_name="Active / Inactive Status")
     slug=models.SlugField(max_length=200,null=True)
-    register_data=models.DateTimeField(auto_now=True,verbose_name="تاریخ درج")
-    published_date=models.DateTimeField(default=timezone.now,verbose_name="تاریخ انتشار")
-    update_date=models.DateTimeField(auto_now=True,verbose_name="تاریخ اخرین بروزرسانی")
+    register_data=models.DateTimeField(auto_now=True,verbose_name="Registration Date")
+    published_date=models.DateTimeField(default=timezone.now,verbose_name="Publication Date")
+    update_date=models.DateTimeField(auto_now=True,verbose_name="Last Update Date")
     
     def __str__(self):
         return f'{self.produce_name}'
@@ -142,37 +142,37 @@ class Product(models.Model):
         return self.product_group.all()[0].id
     
     class Meta:
-        verbose_name = 'کالا'
-        verbose_name_plural = "کالا ها"
+        verbose_name = 'Product'
+        verbose_name_plural = "Products"
 
 #_______________________________________________________________
 class FeatureValue(models.Model):
-    value_title = models.CharField(max_length=100,verbose_name='عنوان مقدار')
-    feature = models.ForeignKey(Feature,on_delete=models.CASCADE,blank=True,null=True,verbose_name="ویژگی",related_name="feature_values")
+    value_title = models.CharField(max_length=100,verbose_name='Value Title')
+    feature = models.ForeignKey(Feature,on_delete=models.CASCADE,blank=True,null=True,verbose_name="Feature",related_name="feature_values")
     
     def __str__(self):
         return f'{self.id} {self.value_title}'
     
     class Meta:
-        verbose_name = 'مقدار ویژگی'
-        verbose_name_plural = 'مقدار ویژگی ها'
+        verbose_name = 'Feature Value'
+        verbose_name_plural = 'Feature Values'
 
 #_______________________________________________________________
 class ProductFeature(models.Model):
-    product = models.ForeignKey(Product,on_delete=models.CASCADE,verbose_name="کالا",related_name='product_features')
-    feature = models.ForeignKey(Feature,on_delete=models.CASCADE,verbose_name="ویژگی")
-    value = models.CharField(max_length=100,verbose_name="مقدار ویژگی کالا")
-    filter_value = models.ForeignKey(FeatureValue,null=True,blank=True,on_delete=models.CASCADE,verbose_name=" مقدار ویژگی برای فیلتر")
+    product = models.ForeignKey(Product,on_delete=models.CASCADE,verbose_name="Product",related_name='product_features')
+    feature = models.ForeignKey(Feature,on_delete=models.CASCADE,verbose_name="Feature")
+    value = models.CharField(max_length=100,verbose_name="Product Feature Value")
+    filter_value = models.ForeignKey(FeatureValue,null=True,blank=True,on_delete=models.CASCADE,verbose_name="Feature Value for Filter")
     
     def __str__(self):
         return f"{self.product} - {self.feature} : {self.value}"
     
     class Meta:
-        verbose_name = 'ویژگی محصول'
-        verbose_name_plural = "ویژگی محصولات"
+        verbose_name = 'Product Feature'
+        verbose_name_plural = "Product Features"
 #_______________________________________________________________
 class ProductGallery(models.Model):
-    product = models.ForeignKey(Product,on_delete=models.CASCADE,verbose_name="کالا",related_name="gallery_images")
+    product = models.ForeignKey(Product,on_delete=models.CASCADE,verbose_name="Product",related_name="gallery_images")
     file_upload = FileUpload('images','product_gallery')
-    image_name = models.ImageField(upload_to=file_upload.upload_to,verbose_name="تصویر کالا")
+    image_name = models.ImageField(upload_to=file_upload.upload_to,verbose_name="Product Image")
     

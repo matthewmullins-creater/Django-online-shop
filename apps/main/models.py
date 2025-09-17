@@ -2,33 +2,33 @@ from django.db import models
 from utils import FileUpload
 from django.utils import timezone
 from django.utils.html import mark_safe
-# ممکنه روی اسلایدر چند تا متن قرار بده که واسه این منظور 3 تا اسلایدر تایتل قرار دادم
-# slider_link : قابل کلیک شدن اسلایدر
+# Multiple texts might be placed on the slider, so I placed 3 slider titles for this purpose
+# slider_link : slider can be clicked
 class Slider(models.Model):
-    slider_title1 = models.CharField(max_length=500,null=True,blank=True,verbose_name="متن اول")
-    slider_title2 = models.CharField(max_length=500,null=True,blank=True,verbose_name="متن دوم")
-    slider_title3 = models.CharField(max_length=500,null=True,blank=True,verbose_name="متن سوم")
+    slider_title1 = models.CharField(max_length=500,null=True,blank=True,verbose_name="First Text")
+    slider_title2 = models.CharField(max_length=500,null=True,blank=True,verbose_name="Second Text")
+    slider_title3 = models.CharField(max_length=500,null=True,blank=True,verbose_name="Third Text")
     
     file_upload = FileUpload('images','slides')
-    image_name = models.ImageField(upload_to=file_upload.upload_to,verbose_name="تصویر اسلایدر")
+    image_name = models.ImageField(upload_to=file_upload.upload_to,verbose_name="Slider Image")
     
-    slider_link = models.URLField(max_length=200,null=True,blank=True,verbose_name="لینک")
+    slider_link = models.URLField(max_length=200,null=True,blank=True,verbose_name="Link")
     
-    is_active = models.BooleanField(default=True,blank=True,verbose_name="وضعیت فعال/غیرفعال")
+    is_active = models.BooleanField(default=True,blank=True,verbose_name="Active/Inactive Status")
     
-    register_date = models.DateTimeField(auto_now_add=True,verbose_name="تاریخ درج")
-    publish_date = models.DateTimeField(default=timezone.now,verbose_name="تاریخ انتشار")
-    update_date = models.DateTimeField(auto_now=True,verbose_name="تاریخ اخرین بروزرسانی")
+    register_date = models.DateTimeField(auto_now_add=True,verbose_name="Registration Date")
+    publish_date = models.DateTimeField(default=timezone.now,verbose_name="Publication Date")
+    update_date = models.DateTimeField(auto_now=True,verbose_name="Last Update Date")
     
     def __str__(self):
         return f"{self.slider_title1}"
     
     class Meta:
-        verbose_name = "اسلایدر"
-        verbose_name_plural = "اسلایدر ها"
+        verbose_name = "Slider"
+        verbose_name_plural = "Sliders"
         
-    # نوشتن کدی برای نمایش عکس در پنل مدیریت
-    # mark_safe : یک کد اچ تی ام ال رو به صورت رشته دریافت میکنه و اونو اجرا میکنه
+    # Writing code to display image in admin panel
+    # mark_safe : receives an HTML code as a string and executes it
     def image_slide(self):
         return mark_safe(f'<img src="/media/{self.image_name}" style="width:80px; height:80px"/>')
     

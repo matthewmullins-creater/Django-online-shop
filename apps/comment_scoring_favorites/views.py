@@ -13,7 +13,7 @@ class CommentView(View):
         commentId = request.GET.get("commentId")
         slug = kwargs['slug']
         
-        # مقدار دهی اولیه فرم - کلید ها باید هم نام با فیلد های فرم باشن میریزشون تو اینپوت مخفیا
+        # Form initial value assignment - keys must have the same name as form fields, put them in hidden inputs
         initial_dict = {
             "product_id": productId,
             "comment_id": commentId,
