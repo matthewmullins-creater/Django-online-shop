@@ -190,5 +190,5 @@ CKEDITOR_CONFIGS = {
     
 }
 #--------------------------------------------------------------------------------------------------
-MERCHANT  =  "00000000-0000-0000-0000-000000000000" # این ثابت مرچنت کدیه که زرینپال بهمون میده و وقتی ثبت نام کردی اینجا قرارش میدی
+MERCHANT  =  "00000000-0000-0000-0000-000000000000" # This is the constant merchant code that Zarinpal gives us and when you register you put it here
 SANDBOX  =  True
